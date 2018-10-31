@@ -1,0 +1,56 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  (0..5).each do |i|
+  config.vm.define "eos#{i}" do |node|
+    node.vm.hostname = "eos#{i}"
+    node.vm.box = "vEOS"
+    #node.vm.network :private_network, ip: "192.168.3.#{10+i}"
+    node.vm.network "public_network", bridge: "vlan#{333+i}", auto_config: false
+
+    node.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+    end
+
+
+    node.vm.provision 'shell', inline: <<-SHELL
+       FastCli -p 15 -c "
+	configure terminal
+	!
+	interface Ethernet1
+	mtu 1500
+	no switchport
+	ip address 10.#{33+i}.0.2/24
+	!
+	!
+	interface loopback0
+	ip address #{100+i}.1.1.1/32
+	no shutdown
+	!
+	interface loopback1
+	ip address #{200+i}.1.1.1/32
+	no shutdown
+	!
+	ip routing
+	!
+	router bgp #{65001+i}
+	   neighbor 10.#{33+i}.0.1 remote-as 65100
+	   network #{200+i}.1.1.1/32
+	!
+	router ospf 1
+	   router-id  10.0.0.#{10+i}
+	   network 10.0.0.0/8 area 0.0.0.0
+	   network #{100+i}.1.1.1/32 area 0.0.0.0
+	   max-lsa 12000
+	!
+	end
+	copy running-config startup-config"
+    SHELL
+
+
+  end
+  end
+
+end
