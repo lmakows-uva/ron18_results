@@ -1,0 +1,54 @@
+TYPE           FILE                                       PROTOCOL
+management     SNMPv2c_get_requests.cap                   SNMP
+management     SSHv2.cap                                  SSH
+management     TACACS+_encrypted.cap                      TACACS+
+management     nf9-juniper-vmx.pcapng.cap                 NETFLOW
+management     sflow.cap                                  SFLOW
+management     telnet.cap                                 TELNET
+management     cm4116_telnet.cap
+redundancy     GLBP_election.cap                          GLBP
+redundancy     HSRP_coup.cap                              HSRP
+redundancy     HSRP_election.cap
+redundancy     HSRP_failover.cap
+redundancy     VRRP_failover.cap                          VRRP
+redundancy     VRRP_preempt.cap
+redundancy     gratuitous_arp_hsrp.cap                    GRAT.     ARP
+routing        BGP_MD5.cap                                BGP
+routing        BGP_MP_NLRI.cap
+routing        bgp_orf_capabilty_negotitation.pcapng.cap
+routing        bgp_orf_prefix_advertisement.pcapng.cap
+routing        bgplu.cap
+routing        OSPF_type7_LSA.cap                         OSPF
+routing        OSPF_with_MD5_auth.cap
+routing        PIM-DM_pruning.cap                         PIMv1
+routing        PIM-SM_join_prune.cap
+routing        PIMv2_bootstrap.cap                        PIMv2
+routing        PIMv2_hellos.cap
+routing        RIPv1.cap                                  RIPv1
+routing        RIPv1_subnet_down.cap
+routing        RIPv2.cap                                  RIPv2
+routing        RIPv2_subnet_down.cap
+switching      802.1D_spanning_tree.cap                   STP
+switching      802.1Q_tunneling.cap
+switching      802.1w_rapid_STP.cap                       RSTP
+switching      rpvstp-access.pcap.cap
+switching      MSTP_Intra-Region_BPDUs.cap                MSTP
+switching      DTP.cap                                    DTP
+switching      ICMP_across_dot1q.cap
+switching      PAGP.cap                                   PAGP
+switching      LACP.cap                                   LACP
+switching      LLDP_and_CDP.cap                           LLDP
+switching      LLDP_and_CDP.cap                           CDP
+switching      QinQ.pcap.cap
+switching      UDLD.cap                                   UDLP
+switching      rpvstp-trunk-native-vid1.pcap.cap
+switching      rpvstp-trunk-native-vid5.pcap.cap
+tunneling      GRE.cap                                    GRE
+tunneling      ICMP_across_dot1q.cap
+tunneling      ICMP_over_L2TPv3_Pseudowire.pcap.cap
+tunneling      mGRE_ICMP.cap
+tunneling      NHRP_registration.cap
+mGRE_ICMP.cap  ICMP
+tunneling      IP_in_IP.cap                               IPinIP
+tunneling      IPsec_ESP-AH_tunnel_mode.cap               IPsec
+tunneling      IPv6_in_IP.cap                             IPv6inIP
