@@ -4,12 +4,50 @@ from scapy.utils import rdpcap
 import threading
 import pcap_diff
 
-DUT_MAC='00:1c:73:7b:f7:5c'
-#HOST_MAC='00:07:43:39:8c:58'
-HOST_MAC='EC:0D:9A:8D:F1:E4'
-VERBOSE=False
 
-HOST_IFACE='enp5s0f4d1'
+
+def get_mac(interface):
+	#Taken from https://stackoverflow.com/a/32080877/869012
+	try:
+		mac = open('/sys/class/net/'+interface+'/address').readline()
+	except:
+		mac = "00:00:00:00:00:00"
+
+	return mac[0:17]
+
+VERBOSE=False
+ARISTA_MAC='00:1c:73:7b:f7:5c'
+#MELLANOX_MAC='ec:0d:9a:8d:f1:e4'
+#it seems for Mellanox using the mac of eth0 does not work, here mac for Eth52
+MELLANOX_MAC='ec:0d:9a:5a:25:40'
+
+try:
+	work_mode = sys.argv[1]
+except IndexError:
+	work_mode=''
+
+if work_mode == 'arista':
+
+	DUT_MAC=ARISTA_MAC
+	HOST_IFACE='enp5s0f4d1'
+	SRC_IP='10.0.0.10'
+	DST_IP='10.0.0.11'
+
+elif work_mode == 'mlnx' or work_mode == 'mellanox':
+
+	DUT_MAC=MELLANOX_MAC
+	HOST_IFACE='enp5s0f4'
+
+	SRC_IP='10.10.0.10'
+	DST_IP='10.10.0.1'
+	#DST_IP='192.168.251.4'
+
+else:
+	print "Usage %s [arista|mlnx] <pcap file>" % sys.argv[0]
+	sys.exit(1)
+
+HOST_MAC=get_mac(HOST_IFACE)
+
 
 def printe(msg):
 	sys.stderr.write(msg + '\n')
@@ -18,7 +56,7 @@ def printe(msg):
 def craft_stop_packet():
 
 	ether=(Ether(dst=DUT_MAC, src=HOST_MAC))
-	ip=IP(dst='192.168.0.111', src='192.168.0.18', proto=254) 
+	ip=IP(dst=DST_IP, src=SRC_IP, proto=254) 
 	udp=fuzz(UDP())
 
 	p = (ether/ip/udp)
@@ -73,17 +111,29 @@ def mysend(filename):
 	for p in pkts:
 		#Ether(str(p)).display()
 
-
-		# Check whether packet has a Ethernet layer, if not skip it
+		# Check whether packet has an Ethernet layer, if not skip it
 		if not (p.haslayer(Ether) or p.haslayer(Dot3)):
 			printe("No ether layer found in packet (%s), skipping" % p.summary())
 			continue
+
+
+
 		# Some packets should not get their DST MAC changed, i.e.
 		# multicast, broadcast
 
 		if not ( p.dst.startswith('01:') or p.dst.startswith('11:') ):
 			p.dst = DUT_MAC
 
+			# for Packets with unicast dst MAC, rewrite dst IP
+			# address
+			if p.haslayer(IP):
+				p.getlayer(IP).dst = DST_IP
+				del p.getlayer(IP).chksum
+
+				if p.haslayer(TCP):
+					del p.getlayer(TCP).chksum
+
+		#p.display()
 		wrpcap(PCAP, p, append=True)
 		sendp(p, iface=HOST_IFACE, verbose=VERBOSE)
 
@@ -99,7 +149,7 @@ def mysend(filename):
 
 
 ### MAIN
-pcap_to_send=sys.argv[1]
+pcap_to_send=sys.argv[2]
 result=''
 
 t1 = threading.Thread(target=mysniff, args = ())
@@ -125,15 +175,3 @@ else:
 #SUMMARY
 print "%s,%s" % (pcap_to_send,result)
 
-#try:
-#	work_mode = sys.argv[1]
-#except IndexError:
-#	work_mode=None
-#
-#if work_mode == 'send':
-#	mysend()
-#elif work_mode == 'sniff':
-#	mysniff()
-#else:
-#	print "Usage %s [send|sniff]" % sys.argv[0]
-#

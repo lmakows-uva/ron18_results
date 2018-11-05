@@ -19,7 +19,13 @@ def cmp_left_to_right(file1, file2):
 
 	pkt_match_cnt=0
 	pkts1=rdpcap(file1)
-	pkts2=rdpcap(file2)
+
+	try:
+		pkts2=rdpcap(file2)
+	except IOError:
+		#there was no PCAP with received packets, assume nothing was received
+		return False
+		
 
 	pkts1 = map(lambda x: str(x), pkts1)
 	pkts2 = map(lambda x: str(x), pkts2)
