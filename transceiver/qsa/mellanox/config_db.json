@@ -1,0 +1,6 @@
+        "Ethernet8": {
+            "alias": "Ethernet8",
+            "admin_status": "up",
+            "lanes": "8",        
+            "mtu": "9100"
+        },

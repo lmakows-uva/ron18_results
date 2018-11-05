@@ -1,0 +1,32 @@
+    "INTERFACE": {
+        "Ethernet0|10.0.0.0/31": {},
+        "Ethernet1|11.0.0.0/31": {},
+        "Ethernet2|12.0.0.0/31": {},
+        "Ethernet3|13.0.0.0/31": {},
+        "Ethernet4|10.0.0.2/31": {}
+    },
+    "PORT": {
+        "Ethernet0": {
+            "alias": "Ethernet0", 
+            "admin_status": "up", 
+            "lanes": "0",       
+            "mtu": "9100"
+        }, 
+        "Ethernet1": {
+            "alias": "Ethernet1",
+            "admin_status": "up",
+            "lanes": "1",      
+            "mtu": "9100"
+        },
+        "Ethernet2": {
+            "alias": "Ethernet2",
+            "admin_status": "up",
+            "lanes": "2",      
+            "mtu": "9100"
+        },
+        "Ethernet3": {
+            "alias": "Ethernet3",
+            "admin_status": "up",
+            "lanes": "3",      
+            "mtu": "9100"
+        },
