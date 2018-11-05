@@ -18,7 +18,7 @@ routing        BGP_MP_NLRI.cap
 routing        bgp_orf_capabilty_negotitation.pcapng.cap
 routing        bgp_orf_prefix_advertisement.pcapng.cap
 routing        bgplu.cap
-routing        OSPF_type7_LSA.cap                         OSPF
+routing        OSPF_type7_LSA.cap                         OSPFv2
 routing        OSPF_with_MD5_auth.cap
 routing        PIM-DM_pruning.cap                         PIMv1
 routing        PIM-SM_join_prune.cap
@@ -40,7 +40,7 @@ switching      LACP.cap                                   LACP
 switching      LLDP_and_CDP.cap                           LLDP
 switching      LLDP_and_CDP.cap                           CDP
 switching      QinQ.pcap.cap
-switching      UDLD.cap                                   UDLP
+switching      UDLD.cap                                   UDLD
 switching      rpvstp-trunk-native-vid1.pcap.cap
 switching      rpvstp-trunk-native-vid5.pcap.cap
 tunneling      GRE.cap                                    GRE
