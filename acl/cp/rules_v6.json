@@ -1,0 +1,32 @@
+{
+    "acl": {
+        "acl-sets": {
+            "acl-set": {
+                "CP_TABLE": {
+                    "acl-entries": {
+                        "acl-entry": {
+                            "1": {
+                                "actions": {
+                                    "config": {
+                                        "forwarding-action": "ACCEPT"
+                                    }
+                                },
+                                "config": {
+                                    "sequence-id": 1
+                                },
+                                "ip": {
+                                    "config": {
+                                        "source-ip-address": "db8::555/128"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "config": {
+                        "name": "CP_TABLE"
+                    }
+                }
+            }
+        }
+    }
+}

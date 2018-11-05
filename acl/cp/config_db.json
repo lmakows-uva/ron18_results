@@ -1,0 +1,13 @@
+
+    "ACL_TABLE": {
+         "CP_TABLE": {
+                    "policy_desc" : "my control-plane table",
+                    "type" : "CTRLPLANE",
+                    "stage" : "INGRESS",
+                    "services" : ["SNMP"],
+                    "ports": [
+                        "Ethernet20"
+                    ]
+                }
+
+    },

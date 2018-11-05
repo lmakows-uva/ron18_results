@@ -1,0 +1,11 @@
+    "ACL_TABLE": {
+         "DATAACL": {
+            "policy_desc" : "data_acl",
+            "type": "l3",
+            "ports": [
+                "Ethernet52",
+                "Ethernet60"
+            ]
+        }
+    },
+
